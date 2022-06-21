@@ -1,5 +1,6 @@
 import { GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-layout';
+import {OXIDANER_TOP} from "@/constants";
 
 const Footer: React.FC = () => {
   const defaultMessage = '蚂蚁集团体验技术部出品';
@@ -9,21 +10,21 @@ const Footer: React.FC = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: '个人主页',
+          title: 'User BlOG',
+          href: {OXIDANER_TOP},
           blankTarget: true,
         },
         {
           key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          title: <><GithubOutlined />Oxidaner GitHub</>,
+          href: 'https://github.com/oxidaner',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'codeNav',
+          title: '编程导航',
+          href: 'https://www,code-nav.cn',
           blankTarget: true,
         },
       ]}
