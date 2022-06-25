@@ -6,7 +6,7 @@ import {history} from 'umi';
 import Footer from '@/components/Footer';
 import {register} from '@/services/ant-design-pro/api';
 import styles from './index.less';
-import {SYSTEM_LOGO} from "@/constants";
+import {OXIDANER_TOP, SYSTEM_LOGO} from "@/constants";
 
 
 const Register: React.FC = () => {
@@ -32,10 +32,10 @@ const Register: React.FC = () => {
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         const { query } = history.location;
-        const { redirect } = query as {
-          redirect: string;
-        };
-        history.push('/user/login/redirect=' + redirect);
+        history.push({
+          pathname: '/user/login',
+          query
+        });
         return;
       } else {
         throw new Error(`register error id = ${id}`);
@@ -59,7 +59,8 @@ const Register: React.FC = () => {
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="Oxidaner 用户中心"
-          subTitle={'最好的注册注册中心'}
+          subTitle={
+            <a href={OXIDANER_TOP} target="_blank" rel="noreferrer"> 最好的登录注册中心</a>}
           initialValues={{
             autoLogin: true,
           }}

@@ -1,16 +1,12 @@
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import {  ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
-import { history, useModel } from 'umi';
+import {LockOutlined, UserOutlined,} from '@ant-design/icons';
+import {Alert, Divider, message, Space, Tabs} from 'antd';
+import React, {useState} from 'react';
+import {LoginForm, ProFormCheckbox, ProFormText} from '@ant-design/pro-form';
+import {history, Link, useModel} from 'umi';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import {login} from '@/services/ant-design-pro/api';
 import styles from './index.less';
-import {SYSTEM_LOGO} from "@/constants";
-import {OXIDANER_TOP} from "@/constants";
+import {OXIDANER_TOP, SYSTEM_LOGO} from "@/constants";
 
 const LoginMessage: React.FC<{
   content: string;
@@ -41,9 +37,8 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
-
-      if (msg.status === 'ok') {
+      const user = await login({ ...values, type });
+      if (user) {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
@@ -58,9 +53,9 @@ const Login: React.FC = () => {
         return;
       }
 
-      console.log(msg); // 如果失败去设置用户错误信息
+      console.log(user); // 如果失败去设置用户错误信息
 
-      setUserLoginState(msg);
+      setUserLoginState(user);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       message.error(defaultLoginFailureMessage);
@@ -74,7 +69,7 @@ const Login: React.FC = () => {
         <LoginForm
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="Oxidaner 用户中心"
-          subTitle={'最好的登录注册中心'}
+          subTitle={<a href={OXIDANER_TOP} target="_blank" rel="noreferrer"> 最好的登录注册中心</a>}
           initialValues={{
             autoLogin: true,
           }}
@@ -133,9 +128,11 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
+            <Space split={<Divider type="vertical"/>} align="center">
             <ProFormCheckbox noStyle name="autoLogin">
               自动登录
             </ProFormCheckbox>
+            <Link to="/user/register">新用户注册</Link>
             <a
               style={{
                 float: 'right',
@@ -144,10 +141,12 @@ const Login: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              忘记密码请联系管理员
+              忘记密码
             </a>
+            </Space>
           </div>
         </LoginForm>
+
       </div>
       <Footer />
     </div>
